@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import CategoryNav from './CategoryNav'
 import MenuSection from './MenuSection'
+import FeaturedStrip from './FeaturedStrip'
 
 // Vista unificada: un solo menú agnóstico de marca, organizado por categorías
 // de comida. Reutiliza CategoryNav y MenuSection en modo brand="unified".
@@ -79,6 +80,9 @@ export default function UnifiedMenuPage({ categories, items, onShowBrands }) {
           </p>
         </div>
       </header>
+
+      {/* ── Destacados ────────────────────────────────────────────────── */}
+      <FeaturedStrip items={items} />
 
       {/* ── Category nav ──────────────────────────────────────────────── */}
       <CategoryNav categories={activeCategories} brand="unified" />

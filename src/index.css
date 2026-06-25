@@ -316,6 +316,15 @@ body::before {
 /* ── Cursor zoom ────────────────────────────────────────────────────────────── */
 .cursor-zoom-in { cursor: zoom-in; }
 
+/* ── Featured strip ─────────────────────────────────────────────────────────── */
+.featured-scroll::-webkit-scrollbar { display: none; }
+.featured-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+
+.featured-card { transition: transform 0.3s cubic-bezier(.22,.61,.36,1); }
+.featured-card:hover { transform: scale(1.03); }
+.featured-card:hover .featured-card-img { transform: scale(1.07); }
+.featured-card-img { transition: transform 0.45s cubic-bezier(.22,.61,.36,1); }
+
 /* ── Brand selector ─────────────────────────────────────────────────────────── */
 .brand-panel {
   transition: flex 0.45s cubic-bezier(.22,.61,.36,1);
