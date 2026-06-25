@@ -97,6 +97,45 @@
   --text-faint:      #3d3830;
 }
 
+/* ── Unificado — "Brasa": negro profundo, acento dorado→naranja ─────────────── */
+.theme-unified {
+  --accent:          #f0820f;  /* punto medio del degradado (usos sólidos)      */
+  --accent-soft:     #ff7a1a;
+  --bg-primary:      #0a0a0a;
+  --surface:         #121212;
+  --surface-2:       #1b1b1b;
+  --border-c:        #262626;
+  --text-primary:    #f2f2f2;
+  --text-secondary:  #aaaaaa;
+  --text-muted:      #6e6e6e;
+  --text-faint:      #444444;
+  /* Degradado de marca (dorado Chiguire → naranja Distrito 44) */
+  --grad-accent: linear-gradient(100deg, #d9a818 0%, #f0820f 50%, #ff6600 100%);
+}
+
+/* Texto con relleno degradado (wordmark, precios) */
+.grad-text {
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* En la vista unificada, los precios heredan el degradado de marca */
+.theme-unified .price-tag {
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Subrayado activo del nav y reglas de sección con degradado */
+.theme-unified .cat-pill.active::after { background: var(--grad-accent); }
+.theme-unified .gold-rule {
+  background: var(--grad-accent);
+}
+
 /* ── Base ───────────────────────────────────────────────────────────────────── */
 body {
   margin: 0;
@@ -146,6 +185,10 @@ body::before {
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-9px); }
 }
 @keyframes logoGlow {
   0%, 100% { filter: drop-shadow(0 0 8px rgba(255,102,0,0.3)); }
@@ -265,6 +308,10 @@ body::before {
 
 /* ── Logo glow (Distrito44) ─────────────────────────────────────────────────── */
 .logo-glow { animation: logoGlow 3s ease-in-out infinite; }
+
+/* ── Logos flotantes (vista unificada) ──────────────────────────────────────── */
+.logo-float       { animation: floaty 4s ease-in-out infinite; }
+.logo-float-delay { animation: floaty 4s ease-in-out infinite; animation-delay: 2s; }
 
 /* ── Cursor zoom ────────────────────────────────────────────────────────────── */
 .cursor-zoom-in { cursor: zoom-in; }

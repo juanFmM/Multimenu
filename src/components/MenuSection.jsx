@@ -1,7 +1,8 @@
 import MenuItemCard from './MenuItemCard'
 
 export default function MenuSection({ category, items, brand }) {
-  const isChiguire = brand === 'chiguire'
+  // Modo elegante (serif + gold-rule con ícono) para Chiguire y la vista unificada.
+  const isChiguire = brand === 'chiguire' || brand === 'unified'
 
   return (
     <section id={`section-${category.id}`} className="mb-16 anim-fade-in">

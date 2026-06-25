@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 
-export default function CategoryNav({ categories, brand }) {
+export default function CategoryNav({ categories }) {
   const [active, setActive] = useState(categories[0]?.id ?? '')
-  const isChiguire = brand === 'chiguire'
 
   useEffect(() => {
     setActive(categories[0]?.id ?? '')
-  }, [brand, categories])
+  }, [categories])
 
   useEffect(() => {
     const observers = []
@@ -50,10 +49,10 @@ export default function CategoryNav({ categories, brand }) {
             }`}
             style={{ color: active === cat.id ? 'var(--accent)' : 'var(--text-muted)' }}
           >
-            {isChiguire && cat.icon && (
+            {cat.icon && (
               <i className={`${cat.icon} text-[0.62rem]`} />
             )}
-            {!isChiguire && cat.emoji && (
+            {!cat.icon && cat.emoji && (
               <span className="text-[0.85rem] leading-none">{cat.emoji}</span>
             )}
             {cat.name}
