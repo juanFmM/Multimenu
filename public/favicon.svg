@@ -1,0 +1,26 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brasa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d9a818"/>
+      <stop offset="55%" stop-color="#f0820f"/>
+      <stop offset="100%" stop-color="#ff6600"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0d0d0d"/>
+  <path d="M 32 10
+           C 24 18, 14 22, 16 34
+           C 17 40, 22 44, 20 52
+           C 26 48, 28 42, 26 36
+           C 30 42, 32 54, 32 54
+           C 32 54, 34 42, 38 36
+           C 36 42, 38 48, 44 52
+           C 42 44, 47 40, 48 34
+           C 50 22, 40 18, 32 10 Z"
+        fill="url(#brasa)"/>
+  <path d="M 32 24
+           C 28 28, 25 32, 26 38
+           C 28 36, 30 34, 32 38
+           C 34 34, 36 36, 38 38
+           C 39 32, 36 28, 32 24 Z"
+        fill="#0d0d0d" opacity="0.7"/>
+</svg>
