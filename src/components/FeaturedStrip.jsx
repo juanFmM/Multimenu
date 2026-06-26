@@ -1,14 +1,17 @@
-import { useRef } from 'react'
 import { FEATURED_NAMES } from '../data/featured'
 
 export default function FeaturedStrip({ items }) {
-  const scrollRef = useRef(null)
-
   const featured = FEATURED_NAMES
     .map((name) => items.find((it) => it.name === name))
     .filter(Boolean)
 
   if (featured.length === 0) return null
+
+  // Duplicamos la lista para crear un loop perfecto: al llegar a -50% del
+  // ancho del track (que mide el doble por la duplicación), el contenido
+  // visible es idéntico al inicio, así el reinicio de la animación es invisible.
+  const loopItems = [...featured, ...featured]
+  const duration = featured.length * 4.5 // segundos — ritmo constante sin importar la cantidad de destacados
 
   return (
     <section className="max-w-5xl mx-auto px-4 mb-10">
@@ -20,13 +23,15 @@ export default function FeaturedStrip({ items }) {
         <i className="fa-solid fa-fire-flame-curved text-[0.7rem]" style={{ color: 'var(--accent)' }} />
       </div>
 
-      <div
-        ref={scrollRef}
-        className="featured-scroll flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory"
-      >
-        {featured.map((item, i) => (
-          <FeaturedCard key={item.id} item={item} index={i} />
-        ))}
+      <div className="featured-viewport">
+        <div
+          className="featured-track flex gap-3"
+          style={{ animationDuration: `${duration}s` }}
+        >
+          {loopItems.map((item, i) => (
+            <FeaturedCard key={`${item.id}-${i}`} item={item} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -43,12 +48,8 @@ function FeaturedCard({ item, index }) {
 
   return (
     <div
-      className="featured-card flex-shrink-0 snap-start relative overflow-hidden rounded-xl cursor-pointer anim-fade-up"
-      style={{
-        width: '185px',
-        height: '255px',
-        animationDelay: `${index * 55}ms`,
-      }}
+      className="featured-card flex-shrink-0 relative overflow-hidden rounded-xl cursor-pointer"
+      style={{ width: '185px', height: '255px' }}
       onClick={handleClick}
     >
       {item.image ? (
@@ -56,6 +57,7 @@ function FeaturedCard({ item, index }) {
           src={item.image}
           alt={item.name}
           className="featured-card-img absolute inset-0 w-full h-full object-cover"
+          draggable={false}
         />
       ) : (
         <div className="absolute inset-0" style={{ background: 'var(--surface-2)' }} />

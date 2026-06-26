@@ -316,14 +316,40 @@ body::before {
 /* ── Cursor zoom ────────────────────────────────────────────────────────────── */
 .cursor-zoom-in { cursor: zoom-in; }
 
-/* ── Featured strip ─────────────────────────────────────────────────────────── */
-.featured-scroll::-webkit-scrollbar { display: none; }
-.featured-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+/* ── Featured strip — carrusel infinito ───────────────────────────────────────── */
+@keyframes featuredScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.featured-viewport {
+  overflow: hidden;
+  width: 100%;
+  /* Fade sutil en los bordes para sugerir continuidad del loop */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+.featured-track {
+  animation-name: featuredScroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Pausa al pasar el mouse — permite leer/clicar sin que el carrusel se mueva */
+.featured-viewport:hover .featured-track { animation-play-state: paused; }
 
 .featured-card { transition: transform 0.3s cubic-bezier(.22,.61,.36,1); }
 .featured-card:hover { transform: scale(1.03); }
 .featured-card:hover .featured-card-img { transform: scale(1.07); }
 .featured-card-img { transition: transform 0.45s cubic-bezier(.22,.61,.36,1); }
+
+/* Respeta accesibilidad: usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .featured-track { animation: none; }
+}
 
 /* ── Brand selector ─────────────────────────────────────────────────────────── */
 .brand-panel {
