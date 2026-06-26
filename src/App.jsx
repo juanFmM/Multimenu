@@ -3,6 +3,7 @@ import LandingPage            from './components/LandingPage'
 import MenuPage               from './components/MenuPage'
 import UnifiedMenuPage        from './components/UnifiedMenuPage'
 import BrandSwitcher          from './components/BrandSwitcher'
+import ReorderToggle          from './components/ReorderToggle'
 import { chiguireCategories, chiguireItems } from './data/chiguireMenu'
 import { useDistrito44Data }  from './hooks/useDistrito44Data'
 import { useUnifiedMenu }     from './hooks/useUnifiedMenu'
@@ -43,8 +44,9 @@ function LoadingScreen() {
 //  'distrito44' → menú individual Distrito 44
 export default function App() {
   // unified storefront default
-  const [view, setView]     = useState('unified')
-  const [fading, setFading] = useState(false)
+  const [view, setView]             = useState('unified')
+  const [fading, setFading]         = useState(false)
+  const [reorderMode, setReorderMode] = useState(false)
 
   // Distrito44 — datos en vivo desde Supabase (con fallback estático). Una sola
   // suscripción: se reutilizan estos items también para el menú unificado.
@@ -82,6 +84,7 @@ export default function App() {
           categories={uCategories}
           items={uItems}
           onShowBrands={() => goTo('landing')}
+          reorderMode={reorderMode}
         />
       )}
 
@@ -93,6 +96,7 @@ export default function App() {
             categories={view === 'chiguire' ? chiguireCategories : d44Categories}
             items={view === 'chiguire' ? chiguireItems : d44Items}
             brand={view}
+            reorderMode={reorderMode}
           />
           <BrandSwitcher
             activeBrand={view}
@@ -100,6 +104,11 @@ export default function App() {
             onHome={() => goTo('unified')}
           />
         </>
+      )}
+
+      {/* Reordenar productos — disponible en todas las vistas con menú */}
+      {view !== 'landing' && (
+        <ReorderToggle active={reorderMode} onToggle={() => setReorderMode((v) => !v)} />
       )}
     </div>
   )

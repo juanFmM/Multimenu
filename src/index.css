@@ -359,3 +359,55 @@ body::before {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
+
+/* ── Reorder mode ──────────────────────────────────────────────────────────── */
+.reorder-toggle {
+  transition:
+    transform  0.22s cubic-bezier(.22,.68,0,1.2),
+    background 0.25s ease,
+    border-color 0.25s ease;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.reorder-toggle:hover { transform: translateY(-2px); }
+
+.reorder-mode-card {
+  outline: 1px dashed color-mix(in srgb, var(--accent) 50%, transparent);
+  outline-offset: 4px;
+  border-radius: 0.7rem;
+  animation: fadeIn 0.25s ease both;
+}
+
+.reorder-controls {
+  animation: scaleIn 0.2s ease both;
+}
+
+.reorder-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--bg-primary) 85%, transparent);
+  border: 1px solid var(--border-c);
+  backdrop-filter: blur(6px);
+  transition:
+    background  0.2s ease,
+    color       0.2s ease,
+    transform   0.15s ease,
+    border-color 0.2s ease;
+}
+.reorder-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: #0a0a0a;
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+.reorder-btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}

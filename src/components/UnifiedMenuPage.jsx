@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react'
 import CategoryNav from './CategoryNav'
 import MenuSection from './MenuSection'
 import FeaturedStrip from './FeaturedStrip'
+import { useItemOrder } from '../hooks/useItemOrder'
 
 // Vista unificada: un solo menú agnóstico de marca, organizado por categorías
 // de comida. Reutiliza CategoryNav y MenuSection en modo brand="unified".
-export default function UnifiedMenuPage({ categories, items, onShowBrands }) {
+export default function UnifiedMenuPage({ categories, items, onShowBrands, reorderMode = false }) {
   const heroRef = useRef(null)
+  const { sortItems, moveItem } = useItemOrder('unified')
 
   const activeCategories = categories.filter((cat) =>
     items.some((item) => item.categoryId === cat.id)
@@ -89,14 +91,19 @@ export default function UnifiedMenuPage({ categories, items, onShowBrands }) {
 
       {/* ── Menu sections ─────────────────────────────────────────────── */}
       <main className="max-w-5xl mx-auto px-4 py-14">
-        {activeCategories.map((cat) => (
-          <MenuSection
-            key={cat.id}
-            category={cat}
-            items={items.filter((i) => i.categoryId === cat.id)}
-            brand="unified"
-          />
-        ))}
+        {activeCategories.map((cat) => {
+          const catItems = sortItems(cat.id, items.filter((i) => i.categoryId === cat.id))
+          return (
+            <MenuSection
+              key={cat.id}
+              category={cat}
+              items={catItems}
+              brand="unified"
+              reorderMode={reorderMode}
+              onMove={(itemId, dir) => moveItem(cat.id, catItems, itemId, dir)}
+            />
+          )
+        })}
       </main>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}

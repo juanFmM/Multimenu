@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react'
 import CategoryNav from './CategoryNav'
 import MenuSection from './MenuSection'
+import { useItemOrder } from '../hooks/useItemOrder'
 
-export default function MenuPage({ categories, items, brand }) {
+export default function MenuPage({ categories, items, brand, reorderMode = false }) {
   const isChiguire = brand === 'chiguire'
   const heroRef = useRef(null)
+  const { sortItems, moveItem } = useItemOrder(brand)
 
   const activeCategories = categories.filter((cat) =>
     items.some((item) => item.categoryId === cat.id)
@@ -132,14 +134,19 @@ export default function MenuPage({ categories, items, brand }) {
           </div>
         )}
 
-        {activeCategories.map((cat) => (
-          <MenuSection
-            key={cat.id}
-            category={cat}
-            items={items.filter((i) => i.categoryId === cat.id)}
-            brand={brand}
-          />
-        ))}
+        {activeCategories.map((cat) => {
+          const catItems = sortItems(cat.id, items.filter((i) => i.categoryId === cat.id))
+          return (
+            <MenuSection
+              key={cat.id}
+              category={cat}
+              items={catItems}
+              brand={brand}
+              reorderMode={reorderMode}
+              onMove={(itemId, dir) => moveItem(cat.id, catItems, itemId, dir)}
+            />
+          )
+        })}
       </main>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}

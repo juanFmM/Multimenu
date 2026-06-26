@@ -1,11 +1,11 @@
 import { useRef } from 'react'
-import { FEATURED_IDS } from '../data/featured'
+import { FEATURED_NAMES } from '../data/featured'
 
 export default function FeaturedStrip({ items }) {
   const scrollRef = useRef(null)
 
-  const featured = FEATURED_IDS
-    .map((id) => items.find((it) => it.id === id))
+  const featured = FEATURED_NAMES
+    .map((name) => items.find((it) => it.name === name))
     .filter(Boolean)
 
   if (featured.length === 0) return null

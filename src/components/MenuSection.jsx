@@ -1,6 +1,6 @@
 import MenuItemCard from './MenuItemCard'
 
-export default function MenuSection({ category, items, brand }) {
+export default function MenuSection({ category, items, brand, reorderMode, onMove }) {
   // Modo elegante (serif + gold-rule con ícono) para Chiguire y la vista unificada.
   const isChiguire = brand === 'chiguire' || brand === 'unified'
 
@@ -71,7 +71,33 @@ export default function MenuSection({ category, items, brand }) {
       {/* ── Items grid ──────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {items.map((item, i) => (
-          <MenuItemCard key={item.id} item={item} index={i} brand={brand} />
+          <div key={item.id} className={`relative ${reorderMode ? 'reorder-mode-card' : ''}`}>
+            {reorderMode && (
+              <div className="reorder-controls absolute top-2 right-2 z-20 flex gap-1.5">
+                <button
+                  type="button"
+                  disabled={i === 0}
+                  onClick={(e) => { e.stopPropagation(); onMove?.(item.id, 'up') }}
+                  className="reorder-btn"
+                  aria-label="Mover arriba"
+                  title="Mover arriba"
+                >
+                  <i className="fa-solid fa-chevron-up" />
+                </button>
+                <button
+                  type="button"
+                  disabled={i === items.length - 1}
+                  onClick={(e) => { e.stopPropagation(); onMove?.(item.id, 'down') }}
+                  className="reorder-btn"
+                  aria-label="Mover abajo"
+                  title="Mover abajo"
+                >
+                  <i className="fa-solid fa-chevron-down" />
+                </button>
+              </div>
+            )}
+            <MenuItemCard item={item} index={i} brand={brand} />
+          </div>
         ))}
       </div>
     </section>

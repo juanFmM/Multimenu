@@ -1,10 +1,18 @@
-// IDs de platos destacados — prefijados tal como aparecen en el menú unificado.
-// Añadir IDs de Distrito 44 (d44-xxx) una vez confirmados desde Supabase.
-export const FEATURED_IDS = [
-  'chi-ca6', // Cachapa Llanera — Signature
-  'chi-pt5', // El Que Frao — Signature
-  'chi-ar3', // Arepa Cabimera — Especial
-  'chi-pe3', // Pepito Mixto — Especial
-  'chi-en1', // Tequeños — Popular
-  'chi-hd3', // Hot Dog Especial
+// Lista de platos destacados para el carrusel "Destacados" del menú unificado.
+// Se matchea por NOMBRE (no por id): los items de Distrito 44 vienen de Supabase
+// con ids dinámicos (UUID generados por la base de datos), mientras ChiguireFood
+// usa ids estáticos. El nombre es el único identificador estable entre ambos.
+// Si un nombre no se encuentra (p. ej. el admin renombró el plato), se omite
+// silenciosamente — el carrusel nunca rompe.
+export const FEATURED_NAMES = [
+  'Llanera',             // Cachapa Llanera — ChiguireFood · Signature
+  'El Que Frao',         // Patacón — ChiguireFood · Signature
+  'Cabimera',            // Arepa Cabimera — ChiguireFood · Especial
+  'Oklahoma',            // Burger 14oz — Distrito 44 · Especial
+  'BBQ Burger',          // Burger Premium — Distrito 44 · Popular
+  'Gaucho Burger',       // Burger Premium — Distrito 44 · Clásica
+  'Pepito Mixto',        // ChiguireFood · Especial
+  'UFO Burger',          // Smash Burger — Distrito 44
+  'Tequeños',            // ChiguireFood · Popular
+  'Hot Dog Especial',    // ChiguireFood
 ]
