@@ -52,13 +52,25 @@ function normalize(item, prefix, map) {
 // Fusiona los items de ambos restaurantes en una sola lista unificada y devuelve
 // solo las categorías que terminan teniendo al menos un plato.
 export function buildUnifiedMenu(chiguireItems = [], d44Items = []) {
-  const items = [
-    ...chiguireItems.map((it) => normalize(it, 'chi', CHIGUIRE_MAP)),
-    ...d44Items.map((it) => normalize(it, 'd44', D44_MAP)),
-  ].filter(Boolean)
+  const chi = chiguireItems.map((it) => normalize(it, 'chi', CHIGUIRE_MAP)).filter(Boolean)
+  const d44 = d44Items.map((it) => normalize(it, 'd44', D44_MAP)).filter(Boolean)
 
-  const usedCats = new Set(items.map((it) => it.categoryId))
+  const usedCats = new Set([...chi, ...d44].map((it) => it.categoryId))
   const categories = unifiedCategories.filter((cat) => usedCats.has(cat.id))
+
+  // Intercala los items de cada marca dentro de cada categoría (chi, d44, chi, d44...)
+  // en vez de mostrar todos los de una marca seguidos de todos los de la otra.
+  const items = categories.flatMap((cat) => {
+    const a = chi.filter((it) => it.categoryId === cat.id)
+    const b = d44.filter((it) => it.categoryId === cat.id)
+    const merged = []
+    const max = Math.max(a.length, b.length)
+    for (let i = 0; i < max; i++) {
+      if (a[i]) merged.push(a[i])
+      if (b[i]) merged.push(b[i])
+    }
+    return merged
+  })
 
   return { categories, items }
 }

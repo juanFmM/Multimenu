@@ -7,6 +7,7 @@ import ReorderToggle          from './components/ReorderToggle'
 import { chiguireCategories, chiguireItems } from './data/chiguireMenu'
 import { useDistrito44Data }  from './hooks/useDistrito44Data'
 import { useUnifiedMenu }     from './hooks/useUnifiedMenu'
+import { SHOW_REORDER_TOGGLE } from './data/featureFlags'
 
 // Spinner minimalista para cuando Supabase está cargando
 function LoadingScreen() {
@@ -107,7 +108,7 @@ export default function App() {
       )}
 
       {/* Reordenar productos — disponible en todas las vistas con menú */}
-      {view !== 'landing' && (
+      {SHOW_REORDER_TOGGLE && view !== 'landing' && (
         <ReorderToggle active={reorderMode} onToggle={() => setReorderMode((v) => !v)} />
       )}
     </div>

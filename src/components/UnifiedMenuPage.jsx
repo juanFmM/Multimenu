@@ -3,6 +3,7 @@ import CategoryNav from './CategoryNav'
 import MenuSection from './MenuSection'
 import FeaturedStrip from './FeaturedStrip'
 import { useItemOrder } from '../hooks/useItemOrder'
+import { SHOW_UNIFIED_FOOTER } from '../data/featureFlags'
 
 // Vista unificada: un solo menú agnóstico de marca, organizado por categorías
 // de comida. Reutiliza CategoryNav y MenuSection en modo brand="unified".
@@ -27,7 +28,7 @@ export default function UnifiedMenuPage({ categories, items, onShowBrands, reord
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <header className="relative overflow-hidden pt-16 pb-12">
+      <header className="relative overflow-hidden pt-16 pb-12 mb-3 sm:mb-0">
         {/* Parallax ambient glow — mezcla dorado→naranja */}
         <div
           ref={heroRef}
@@ -87,7 +88,9 @@ export default function UnifiedMenuPage({ categories, items, onShowBrands, reord
       <FeaturedStrip items={items} />
 
       {/* ── Category nav ──────────────────────────────────────────────── */}
-      <CategoryNav categories={activeCategories} brand="unified" />
+      <div className="pt-8">
+        <CategoryNav categories={activeCategories} brand="unified" />
+      </div>
 
       {/* ── Menu sections ─────────────────────────────────────────────── */}
       <main className="max-w-5xl mx-auto px-4 py-14">
@@ -107,43 +110,45 @@ export default function UnifiedMenuPage({ categories, items, onShowBrands, reord
       </main>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}
-      <footer
-        className="text-center py-12"
-        style={{ borderTop: '1px solid var(--border-c)' }}
-      >
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <span className="w-10 gold-rule" />
-          <i className="fa-solid fa-utensils text-xs" style={{ color: 'var(--text-faint)' }} />
-          <span className="w-10 gold-rule" />
-        </div>
+      {SHOW_UNIFIED_FOOTER && (
+        <footer
+          className="text-center py-12"
+          style={{ borderTop: '1px solid var(--border-c)' }}
+        >
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <span className="w-10 gold-rule" />
+            <i className="fa-solid fa-utensils text-xs" style={{ color: 'var(--text-faint)' }} />
+            <span className="w-10 gold-rule" />
+          </div>
 
-        {/* Acceso secundario: ver menú por restaurante */}
-        {onShowBrands && (
-          <button
-            onClick={onShowBrands}
-            className="label-caps cursor-pointer px-4 py-2 mb-5 inline-flex items-center gap-2"
-            style={{
-              color: 'var(--accent)',
-              border: '1px solid color-mix(in srgb, var(--accent) 30%, transparent)',
-              borderRadius: '4px',
-              transition: 'background 0.25s ease, border-color 0.25s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 10%, transparent)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent'
-            }}
-          >
-            <i className="fa-solid fa-store text-[0.7rem]" />
-            Ver menú por restaurante
-          </button>
-        )}
+          {/* Acceso secundario: ver menú por restaurante */}
+          {onShowBrands && (
+            <button
+              onClick={onShowBrands}
+              className="label-caps cursor-pointer px-4 py-2 mb-5 inline-flex items-center gap-2"
+              style={{
+                color: 'var(--accent)',
+                border: '1px solid color-mix(in srgb, var(--accent) 30%, transparent)',
+                borderRadius: '4px',
+                transition: 'background 0.25s ease, border-color 0.25s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 10%, transparent)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+              }}
+            >
+              <i className="fa-solid fa-store text-[0.7rem]" />
+              Ver menú por restaurante
+            </button>
+          )}
 
-        <p className="label-caps" style={{ color: 'var(--text-faint)' }}>
-          República Dominicana
-        </p>
-      </footer>
+          <p className="label-caps" style={{ color: 'var(--text-faint)' }}>
+            República Dominicana
+          </p>
+        </footer>
+      )}
     </div>
   )
 }
