@@ -63,7 +63,7 @@ export const chiguireItems = [
     description: 'Crujiente patacón relleno con res mechada bien sazonada. Opción entre plátano maduro o verde.', price: 780, badge: null },
   { id: 'pt3', categoryId: 'patacones', name: 'Costilla BBQ', image: '/img/costilla-bbq.jpg',
     description: 'Relleno con masa de costilla a la BBQ, mix de repollo, pico de gallo, salsas especiales y coronado con un jugoso queso gratinado.', price: 850, badge: 'Especial' },
-  { id: 'pt4', categoryId: 'patacones', name: 'Llanero',
+  { id: 'pt4', categoryId: 'patacones', name: 'Llanero', image: '/img/patacon-llanero.jpeg',
     description: 'Relleno con carne de res asada, salchicha, aguacate, mix de repollo, salsa de queso y bacon, coronado con queso a la plancha.', price: 880, badge: null },
   { id: 'pt5', categoryId: 'patacones', name: 'El Que Frao', image: '/img/el-que-frao.jpg',
     description: 'Relleno con jugosa carne de res asada, pollo a la plancha, salchicha parrillera, mix de repollo, tomate, aguacate, salsas y queso gratinado.', price: 980, badge: 'Signature' },
